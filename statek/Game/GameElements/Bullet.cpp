@@ -52,7 +52,9 @@ glm::vec3 Bullet::GetRotation() {
 }
 
 void Bullet::ReactToCollision(IPhysicsable *other) {
-	
+	if(other->type == "asteroid"){
+		Destroy();
+	}
 }
 
 void Bullet::Tick(float delta) {

@@ -80,13 +80,13 @@ set(GRAPHICS_SOURCE
 		statek/Graphics/OpenGLHeaders.h)
 set(GAME_SOURCE
 		statek/Game.cpp
-		statek/Game.h statek/Game/Camera.cpp statek/Game/Camera.h statek/Game/Interfaces/IRenderable.h statek/Game/Interfaces/Actor.h statek/Game/GameElements/TestObject.cpp statek/Game/GameElements/TestObject.h statek/Game/GameElements/Asteroid.cpp statek/Game/GameElements/Asteroid.h statek/Game/Interfaces/IPhysicsable.h statek/Game/GameElements/PlayerShip.cpp statek/Game/GameElements/PlayerShip.h statek/Game/GameElements/Bullet.cpp statek/Game/GameElements/Bullet.h statek/Game/Interfaces/Actor.cpp statek/Game/Interfaces/IPhysicsable.cpp statek/Game/Interfaces/IRenderable.cpp statek/Game/Interfaces/ITickable.cpp statek/Game/Interfaces/ITickable.h)
+		statek/Game.h statek/Game/Camera.cpp statek/Game/Camera.h statek/Game/Interfaces/IRenderable.h statek/Game/Interfaces/Actor.h statek/Game/GameElements/TestObject.cpp statek/Game/GameElements/TestObject.h statek/Game/GameElements/Asteroid.cpp statek/Game/GameElements/Asteroid.h statek/Game/Interfaces/IPhysicsable.h statek/Game/GameElements/PlayerShip.cpp statek/Game/GameElements/PlayerShip.h statek/Game/GameElements/Bullet.cpp statek/Game/GameElements/Bullet.h statek/Game/Interfaces/Actor.cpp statek/Game/Interfaces/IPhysicsable.cpp statek/Game/Interfaces/IRenderable.cpp statek/Game/Interfaces/ITickable.cpp statek/Game/Interfaces/ITickable.h statek/Game/GameElements/AsteroidGenerator.cpp statek/Game/GameElements/AsteroidGenerator.h)
 # Tutorial 9 - several objects
 add_executable(statek
 		${GRAPHICS_SOURCE}
 		${GAME_SOURCE}
 		${PHYSICS_SOURCE}
-		statek/tutorial09_several_objects.cpp
+		statek/main.cpp
 )
 target_link_libraries(statek
 	${ALL_LIBS}

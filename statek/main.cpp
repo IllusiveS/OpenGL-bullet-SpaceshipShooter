@@ -12,10 +12,9 @@
 GLFWwindow* window;
 
 
-#include <Game/GameElements/TestObject.h>
-#include <Game/GameElements/Asteroid.h>
 #include <time.h>
 #include <Game/GameElements/PlayerShip.h>
+#include <Game/GameElements/AsteroidGenerator.h>
 
 int main( void )
 {
@@ -27,10 +26,7 @@ int main( void )
 	gra->renderer->LoadMesh("bullet", "./Models/Bullet");
 	//TestObject obj;
 	PlayerShip * ship = PlayerShip::CreateShip();
-	//Asteroid * ast1 = Asteroid::CreateAsteroid(glm::vec3(0, 0, -5));
-	//Asteroid * ast2 = Asteroid::CreateAsteroid(glm::vec3(5, 0, -10));
-	//Asteroid * ast3 = Asteroid::CreateAsteroid(glm::vec3(0, 0, -5));
-	//Asteroid * ast4 = Asteroid::CreateAsteroid(glm::vec3(5, 0, -5));
+	AsteroidGenerator * generator = new AsteroidGenerator();
     gra->Begin();
     gra->Loop();
     gra->End();

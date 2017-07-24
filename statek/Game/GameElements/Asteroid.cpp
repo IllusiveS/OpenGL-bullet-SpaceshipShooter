@@ -2,15 +2,16 @@
 // Created by wysocki on 22/07/2017.
 //
 
+#include "Asteroid.h"
 #include <LinearMath/btDefaultMotionState.h>
 #include <BulletCollision/CollisionShapes/btBoxShape.h>
 #include <Graphics/Mesh.h>
 #include <time.h>
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
 #include <Game.h>
-#include "Asteroid.h"
+#include <Game/GameElements/AsteroidGenerator.h>
 
-Asteroid * Asteroid::CreateAsteroid(glm::vec3 pos) {
+Asteroid * Asteroid::CreateAsteroid(glm::vec3 pos, AsteroidGenerator * generator) {
 	float a = rand() % 180;
 	float b = rand() % 180;
 	float c = rand() % 180;
@@ -23,13 +24,13 @@ Asteroid * Asteroid::CreateAsteroid(glm::vec3 pos) {
 	asteroidShape->calculateLocalInertia(mass, fallInertia);
 	
 	btRigidBody::btRigidBodyConstructionInfo asteroidRigidbodyCI(mass, asteroidMotionState, asteroidShape, fallInertia);
-	Asteroid* asteroid = new Asteroid(asteroidRigidbodyCI, asteroidMotionState, asteroidShape);
+	Asteroid* asteroid = new Asteroid(asteroidRigidbodyCI, generator);
 	
 	asteroid->setRestitution(1.0);
 	
 	/* generate secret number between 1 and 10: */
-	float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/1)) - 0.5f;
-	float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/1)) + 1.5f;
+	float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/3)) - 1.5f;
+	float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/2)) + 3.0f;
 	
 	asteroid->setDamping(0, 0);
 	
@@ -42,7 +43,7 @@ Asteroid * Asteroid::CreateAsteroid(glm::vec3 pos) {
 	return asteroid;
 }
 
-Asteroid::Asteroid(btRigidBody::btRigidBodyConstructionInfo CI, btDefaultMotionState* state, btCollisionShape* collShape) : IPhysicsable(CI) {
+Asteroid::Asteroid(btRigidBody::btRigidBodyConstructionInfo CI, AsteroidGenerator * generator) : IPhysicsable(CI), generator(generator) {
 
 }
 
@@ -51,7 +52,10 @@ Asteroid::~Asteroid() {
 }
 
 void Asteroid::ReactToCollision(IPhysicsable *other) {
-
+	if(other->type == "bullet"){
+		Destroy();
+		generator->AsteroidKilled();
+	}
 }
 
 glm::vec3 Asteroid::GetPosition() {
@@ -72,4 +76,12 @@ glm::vec3 Asteroid::GetRotation() {
 
 void Asteroid::SetMesh(Mesh *mesh) {
 	this->mesh = mesh;
+}
+
+void Asteroid::Tick(float delta) {
+	glm::vec3 pos = GetPosition();
+	if (pos.z > 13){
+		generator->AsteroidKilled();
+		Destroy();
+	}
 }

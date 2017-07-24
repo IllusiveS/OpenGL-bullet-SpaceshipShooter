@@ -48,11 +48,13 @@ void Game::Loop() {
      
 	    UpdateTick(timePassed);
 	    
+	    RemoveUnusedActors();
+	    
 	    renderer->RenderAll(window, camera);
 	    
         glfwSwapBuffers(window->window);
         glfwPollEvents();
-	    RemoveUnusedActors();
+	   
 
     } // Check if the ESC key was pressed or the window was closed
     while( glfwGetKey(window->window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
@@ -127,7 +129,6 @@ void Game::UpdateTick(float delta) {
 		(*itr)->Tick(delta);
 	}
 	
-	RemoveUnusedActors();
 }
 
 void Game::UpdatePhysics(float delta) {
