@@ -1,0 +1,18 @@
+syntax: glob
+
+*.dll
+*.a
+*.so
+*.lib
+*.exe
+build/*
+bin-*/*
+distrib/build_*/*
+*.bak
+*.orig
+screenshot.bmp
+*.pyc
+Thumbs.db
+glob:OpenGL-tutorial_v*
+relre:.*\.blend.+
+glob:*.mtl
