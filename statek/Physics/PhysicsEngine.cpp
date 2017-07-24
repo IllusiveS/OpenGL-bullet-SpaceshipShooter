@@ -42,22 +42,19 @@ void PhysicsEngine::ProcessPhysics(float timePassed) {
 	bt_collision_world->performDiscreteCollisionDetection();
 	int numManifolds = bt_collision_world->getDispatcher()->getNumManifolds();
 	
-//For each contact manifold
-//	for (int i = 0; i < numManifolds; i++) {
-//		btPersistentManifold* contactManifold = bt_collision_world->getDispatcher()->getManifoldByIndexInternal(i);
-//		const btRigidBody* obA = dynamic_cast<const btRigidBody*>(contactManifold->getBody0());
-//		const btRigidBody* obB = dynamic_cast<const btRigidBody*>(contactManifold->getBody1());
-//		contactManifold->refreshContactPoints(obA->getWorldTransform(), obB->getWorldTransform());
-//		int numContacts = contactManifold->getNumContacts();
-//		//For each contact point in that manifold
-//		for (int j = 0; j < numContacts; j++) {
-//			//Get the contact information
-//			btManifoldPoint& pt = contactManifold->getContactPoint(j);
-//			btVector3 ptA = pt.getPositionWorldOnA();
-//			btVector3 ptB = pt.getPositionWorldOnB();
-//			double ptdist = pt.getDistance();
-//		}
-//	}
+	for (int i = 0; i < numManifolds; i++) {
+		btPersistentManifold* contactManifold = bt_collision_world->getDispatcher()->getManifoldByIndexInternal(i);
+		const IPhysicsable* obA = dynamic_cast<const IPhysicsable*>(contactManifold->getBody0());
+		const IPhysicsable* obB = dynamic_cast<const IPhysicsable*>(contactManifold->getBody1());
+		
+		IPhysicsable* first = const_cast<IPhysicsable *>(obA);
+		IPhysicsable* second = const_cast<IPhysicsable *>(obB);
+		
+		contactManifold->refreshContactPoints(obA->getWorldTransform(), obB->getWorldTransform());
+		
+		first->ReactToCollision(second);
+		second->ReactToCollision(first);
+	}
 }
 
 void PhysicsEngine::AddObject(IPhysicsable *body) {

@@ -38,6 +38,7 @@ Asteroid * Asteroid::CreateAsteroid(glm::vec3 pos) {
 	asteroid->activate(true);
 	asteroid->applyCentralImpulse(btVector3(x, 0, y));
 	asteroid->SetMesh(Game::GetGame()->renderer->retrieveMesh("rock"));
+	asteroid->type = "asteroid";
 	return asteroid;
 }
 

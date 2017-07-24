@@ -31,6 +31,7 @@ Bullet *Bullet::createBullet(glm::vec3 position) {
 	bullet->activate(true);
 	bullet->applyCentralImpulse(btVector3(0, 0, -10));
 	bullet->mesh = Game::GetGame()->renderer->retrieveMesh("bullet");
+	bullet->type = "bullet";
 	return bullet;
 }
 
@@ -51,7 +52,7 @@ glm::vec3 Bullet::GetRotation() {
 }
 
 void Bullet::ReactToCollision(IPhysicsable *other) {
-
+	
 }
 
 void Bullet::Tick(float delta) {

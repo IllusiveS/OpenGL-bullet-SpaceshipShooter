@@ -37,6 +37,7 @@ PlayerShip *PlayerShip::CreateShip() {
 	//ship->applyCentralImpulse(btVector3(x, 0, y));
 	ship->mesh = Game::GetGame()->renderer->retrieveMesh("ship");
 	//ship->setCollisionFlags(ship->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	ship->type = "ship";
 	return ship;
 }
 
