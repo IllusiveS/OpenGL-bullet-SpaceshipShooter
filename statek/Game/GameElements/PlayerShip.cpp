@@ -6,12 +6,13 @@
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
 #include <Game.h>
 #include <BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h>
+#include <chrono>
 #include "PlayerShip.h"
 #include "Bullet.h"
 
 PlayerShip::PlayerShip(const btRigidBody::btRigidBodyConstructionInfo &constructionInfo)
-		: IPhysicsable(constructionInfo), speed(50.0f), limit(11.5f) {
-	
+		: IPhysicsable(constructionInfo), speed(50.0f), limit(11.5f), prevSpawnTime(0), timeBetweenSpawns(500){
+	currentTime = std::chrono::duration_cast< std::chrono::milliseconds >(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
 PlayerShip *PlayerShip::CreateShip() {
@@ -27,7 +28,6 @@ PlayerShip *PlayerShip::CreateShip() {
 	
 	//ship->setRestitution(1.0);
 	
-	/* generate secret number between 1 and 10: */
 	float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/1)) - 0.5f;
 	float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/1)) + 1.5f;
 	
@@ -62,6 +62,8 @@ glm::vec3 PlayerShip::GetRotation() {
 }
 
 void PlayerShip::Tick(float delta) {
+	currentTime = std::chrono::duration_cast< std::chrono::milliseconds >(std::chrono::system_clock::now().time_since_epoch()).count();
+	
 	if (glfwGetKey( Game::GetGame()->window->window, GLFW_KEY_RIGHT ) == GLFW_PRESS){
 		if(GetPosition().x < limit){
 			activate(true);
@@ -75,7 +77,12 @@ void PlayerShip::Tick(float delta) {
 		}
 	}
 	if (glfwGetKey( Game::GetGame()->window->window, GLFW_KEY_SPACE ) == GLFW_PRESS) {
-		Bullet::createBullet(GetPosition());
+		
+		if(currentTime > prevSpawnTime){
+			Bullet::createBullet(GetPosition());
+			prevSpawnTime = currentTime + (int)timeBetweenSpawns;
+		}
+		
 	}
 	if(GetPosition().x > limit) {
 		activate(true);

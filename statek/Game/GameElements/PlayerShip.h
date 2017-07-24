@@ -29,6 +29,11 @@ public:
 	virtual glm::vec3 GetPosition();
 	virtual glm::vec3 GetScale();
 	virtual glm::vec3 GetRotation();
+
+private:
+	int timeBetweenSpawns;
+	long long int prevSpawnTime;
+	long long int currentTime;
 	
 };
 

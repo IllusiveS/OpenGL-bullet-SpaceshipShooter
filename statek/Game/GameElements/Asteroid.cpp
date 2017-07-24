@@ -16,8 +16,12 @@ Asteroid * Asteroid::CreateAsteroid(glm::vec3 pos, AsteroidGenerator * generator
 	float b = rand() % 180;
 	float c = rand() % 180;
 	
-	btDefaultMotionState* asteroidMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(pos.x, pos.y, pos.z)));
-	btCollisionShape* asteroidShape = new btSphereShape(1);
+	float scaX = 0.5f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0-0.5f)));
+	float scaY = 0.5f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0-0.5f)));
+	float scaZ = 0.5f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0-0.5f)));
+	
+	btDefaultMotionState* asteroidMotionState = new btDefaultMotionState(btTransform(btQuaternion(a, b, c, 1), btVector3(pos.x, pos.y, pos.z)));
+	btCollisionShape* asteroidShape = new btBoxShape(btVector3(scaX, scaY, scaZ));
 	
 	btScalar mass = 1;
 	btVector3 fallInertia(0, 0, 0);
@@ -28,7 +32,10 @@ Asteroid * Asteroid::CreateAsteroid(glm::vec3 pos, AsteroidGenerator * generator
 	
 	asteroid->setRestitution(1.0);
 	
-	/* generate secret number between 1 and 10: */
+	asteroid->scaX = scaX;
+	asteroid->scaY = scaY;
+	asteroid->scaZ = scaZ;
+	
 	float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/3)) - 1.5f;
 	float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/2)) + 3.0f;
 	
@@ -67,7 +74,7 @@ glm::vec3 Asteroid::GetPosition() {
 }
 
 glm::vec3 Asteroid::GetScale() {
-	return glm::vec3(1.0, 1.0, 1.0);
+	return glm::vec3(scaX, scaY, scaZ);
 }
 
 glm::vec3 Asteroid::GetRotation() {

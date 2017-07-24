@@ -33,9 +33,15 @@ public:
 	
 	void SetMesh(Mesh * mesh);
 	
+	float scaX;
+	float scaY;
+	float scaZ;
+	
 private:
 	Asteroid(btRigidBodyConstructionInfo CI, AsteroidGenerator * generator);
 	virtual ~Asteroid();
+	
+	
 };
 
 

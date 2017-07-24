@@ -19,9 +19,9 @@ public:
 	void AsteroidKilled();
 
 private:
-	float timeBetweenSpawns;
-	float prevSpawnTime;
-	float currentTime;
+	int timeBetweenSpawns;
+	long long int prevSpawnTime;
+	long long int currentTime;
 	int asteroidsToSpawn;
 };
 
