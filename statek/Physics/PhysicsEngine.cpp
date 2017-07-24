@@ -65,7 +65,7 @@ void PhysicsEngine::AddObject(IPhysicsable *body) {
 }
 
 void PhysicsEngine::RemoveObject(IPhysicsable *body) {
-	bt_collision_world->addRigidBody(body);
+	bt_collision_world->removeRigidBody(body);
 }
 
 

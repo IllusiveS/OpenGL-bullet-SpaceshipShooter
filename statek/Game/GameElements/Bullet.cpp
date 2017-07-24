@@ -2,10 +2,11 @@
 // Created by wysocki on 24/07/2017.
 //
 
+#include "Bullet.h"
 #include <LinearMath/btDefaultMotionState.h>
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
 #include <Game.h>
-#include "Bullet.h"
+
 
 Bullet::Bullet(const btRigidBody::btRigidBodyConstructionInfo &constructionInfo) : IPhysicsable(constructionInfo) {
 
@@ -28,7 +29,7 @@ Bullet *Bullet::createBullet(glm::vec3 position) {
 	
 	bullet->setCollisionFlags(bullet->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
 	bullet->activate(true);
-	bullet->applyCentralImpulse(btVector3(0, 0, 5));
+	bullet->applyCentralImpulse(btVector3(0, 0, -10));
 	bullet->mesh = Game::GetGame()->renderer->retrieveMesh("bullet");
 	return bullet;
 }
@@ -42,7 +43,7 @@ glm::vec3 Bullet::GetPosition() {
 }
 
 glm::vec3 Bullet::GetScale() {
-	return glm::vec3(1.0, 1.0, 1.0);
+	return glm::vec3(0.05, 0.05, 0.05);
 }
 
 glm::vec3 Bullet::GetRotation() {
@@ -51,4 +52,11 @@ glm::vec3 Bullet::GetRotation() {
 
 void Bullet::ReactToCollision(IPhysicsable *other) {
 
+}
+
+void Bullet::Tick(float delta) {
+	glm::vec3 pos = GetPosition();
+	if (pos.z < -11){
+		Destroy();
+	}
 }

@@ -52,6 +52,7 @@ void Game::Loop() {
 	    
         glfwSwapBuffers(window->window);
         glfwPollEvents();
+	    RemoveUnusedActors();
 
     } // Check if the ESC key was pressed or the window was closed
     while( glfwGetKey(window->window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
@@ -97,7 +98,7 @@ void Game::SubscribeRender(IRenderable *render) {
 }
 
 void Game::UnSubscribeActor(Actor *actor) {
-	actors.remove(actor);
+	actorsToBeRemoved.push_back(actor);
 }
 
 void Game::UnSubscribeTick(ITickable *tick) {
@@ -138,7 +139,12 @@ void Game::Render() {
 }
 
 void Game::RemoveUnusedActors() {
-
+	for(auto itr = actorsToBeRemoved.begin(); itr != actorsToBeRemoved.end(); itr++) {
+		Actor * actorToRemove = *itr;
+		actors.remove(actorToRemove);
+		delete actorToRemove;
+	}
+	actorsToBeRemoved.clear();
 }
 
 void Game::Finish() {

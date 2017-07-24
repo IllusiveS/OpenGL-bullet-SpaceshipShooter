@@ -14,7 +14,7 @@ class Mesh;
 class IRenderable {
 public:
 	IRenderable();
-	~IRenderable();
+	virtual ~IRenderable();
 	
 	Mesh * mesh;
 	

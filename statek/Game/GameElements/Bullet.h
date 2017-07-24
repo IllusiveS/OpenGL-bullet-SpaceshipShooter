@@ -9,8 +9,10 @@
 #include <Game/Interfaces/Actor.h>
 #include <Game/Interfaces/IPhysicsable.h>
 #include <Game/Interfaces/IRenderable.h>
+#include <Game/Interfaces/ITickable.h>
 
-class Bullet : public Actor, public IPhysicsable, public IRenderable {
+
+class Bullet : public Actor, public IPhysicsable, public IRenderable, public ITickable {
 public:
 	static Bullet * createBullet(glm::vec3 position);
 	
@@ -22,6 +24,8 @@ public:
 	virtual glm::vec3 GetRotation();
 	
 	virtual void ReactToCollision(IPhysicsable * other);
+	
+	virtual void Tick(float delta);
 };
 
 

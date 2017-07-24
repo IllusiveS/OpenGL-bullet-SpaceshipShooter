@@ -13,7 +13,7 @@ class IPhysicsable : public btRigidBody {
 public:
 	IPhysicsable(btRigidBodyConstructionInfo constructionInfo);
 	
-	~IPhysicsable();
+	virtual ~IPhysicsable();
 
 public:
 	std::string type;
