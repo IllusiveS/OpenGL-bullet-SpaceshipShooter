@@ -147,6 +147,7 @@ void Mesh::readTexture(std::string name, Mesh *mesh, GLuint programId) {
     stbi_uc * imagebasic = stbi_load((name).c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
     stbi_uc * imagetga = stbi_load((name+".tga").c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
     stbi_uc * imagejpeg = stbi_load((name+".jpg").c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+    stbi_uc * imagepng = stbi_load((name+".png").c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
     
     if (imagebasic) {
         image = imagebasic;
@@ -157,6 +158,9 @@ void Mesh::readTexture(std::string name, Mesh *mesh, GLuint programId) {
 	if(imagejpeg) {
 		image = imagejpeg;
 	}
+    if(imagepng) {
+        image = imagepng;
+    }
     
     if (!image) {
         throw std::runtime_error("failed to load texture " + name + " !");

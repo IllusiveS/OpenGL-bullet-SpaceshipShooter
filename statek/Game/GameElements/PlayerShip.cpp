@@ -7,6 +7,7 @@
 #include <Game.h>
 #include <BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h>
 #include "PlayerShip.h"
+#include "Bullet.h"
 
 PlayerShip::PlayerShip(const btRigidBody::btRigidBodyConstructionInfo &constructionInfo)
 		: IPhysicsable(constructionInfo), speed(50.0f), limit(11.5f) {
@@ -15,7 +16,7 @@ PlayerShip::PlayerShip(const btRigidBody::btRigidBodyConstructionInfo &construct
 
 PlayerShip *PlayerShip::CreateShip() {
 	btDefaultMotionState* asteroidMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 8)));
-	btCollisionShape* asteroidShape = new btSphereShape(0.05);
+	btCollisionShape* asteroidShape = new btSphereShape(1);
 	
 	btScalar mass = 1;
 	btVector3 fallInertia(0, 0, 0);
@@ -71,6 +72,9 @@ void PlayerShip::Tick(float delta) {
 			activate(true);
 			applyCentralImpulse(btVector3(delta * speed * -1, 0, 0));
 		}
+	}
+	if (glfwGetKey( Game::GetGame()->window->window, GLFW_KEY_SPACE ) == GLFW_PRESS) {
+		Bullet::createBullet(GetPosition());
 	}
 	if(GetPosition().x > limit) {
 		activate(true);

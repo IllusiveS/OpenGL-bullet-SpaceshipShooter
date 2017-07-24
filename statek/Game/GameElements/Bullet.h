@@ -12,8 +12,16 @@
 
 class Bullet : public Actor, public IPhysicsable, public IRenderable {
 public:
+	static Bullet * createBullet(glm::vec3 position);
+	
 	Bullet(const btRigidBodyConstructionInfo &constructionInfo);
 	
+	
+	virtual glm::vec3 GetPosition();
+	virtual glm::vec3 GetScale();
+	virtual glm::vec3 GetRotation();
+	
+	virtual void ReactToCollision(IPhysicsable * other);
 };
 
 
