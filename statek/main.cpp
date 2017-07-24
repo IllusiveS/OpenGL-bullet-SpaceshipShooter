@@ -25,8 +25,7 @@ int main( void )
 	gra->renderer->LoadMesh("ship", "./Models/Ship");
 	gra->renderer->LoadMesh("bullet", "./Models/Bullet");
 	//TestObject obj;
-	PlayerShip * ship = PlayerShip::CreateShip();
-	AsteroidGenerator * generator = new AsteroidGenerator();
+	gra->RestartScene();
     gra->Begin();
     gra->Loop();
     gra->End();

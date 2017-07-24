@@ -26,11 +26,6 @@ PlayerShip *PlayerShip::CreateShip() {
 	btRigidBody::btRigidBodyConstructionInfo asteroidRigidbodyCI(mass, asteroidMotionState, asteroidShape, fallInertia);
 	PlayerShip* ship = new PlayerShip(asteroidRigidbodyCI);
 	
-	//ship->setRestitution(1.0);
-	
-	float x = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/1)) - 0.5f;
-	float y = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/1)) + 1.5f;
-	
 	ship->setDamping(0.99, 0.99);
 	
 	ship->activate(true);
@@ -42,7 +37,9 @@ PlayerShip *PlayerShip::CreateShip() {
 }
 
 void PlayerShip::ReactToCollision(IPhysicsable *other) {
-
+	if(other->type == "asteroid"){
+		Game::GetGame()->RestartScene();
+	}
 }
 
 glm::vec3 PlayerShip::GetPosition() {

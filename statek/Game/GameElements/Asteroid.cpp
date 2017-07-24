@@ -16,12 +16,12 @@ Asteroid * Asteroid::CreateAsteroid(glm::vec3 pos, AsteroidGenerator * generator
 	float b = rand() % 180;
 	float c = rand() % 180;
 	
-	float scaX = 0.5f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0-0.5f)));
-	float scaY = 0.5f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0-0.5f)));
-	float scaZ = 0.5f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0-0.5f)));
+	float scaX = 1.0f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0-0.5f)));
+	float scaY = 1.0f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0-0.5f)));
+	float scaZ = 1.0f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.0-0.5f)));
 	
 	btDefaultMotionState* asteroidMotionState = new btDefaultMotionState(btTransform(btQuaternion(a, b, c, 1), btVector3(pos.x, pos.y, pos.z)));
-	btCollisionShape* asteroidShape = new btBoxShape(btVector3(scaX, scaY, scaZ));
+	btCollisionShape* asteroidShape = new btBoxShape(btVector3(1, 1, 1));
 	
 	btScalar mass = 1;
 	btVector3 fallInertia(0, 0, 0);

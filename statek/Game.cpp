@@ -10,6 +10,8 @@
 #include "Game.h"
 #include <Game/Interfaces/Actor.h>
 #include <Game/Interfaces/ITickable.h>
+#include <Game/GameElements/PlayerShip.h>
+#include <Game/GameElements/AsteroidGenerator.h>
 
 Game * Game::gameSingleton = nullptr;
 
@@ -30,6 +32,13 @@ void Game::Loop() {
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
     do{
+	    if(isStart){
+		    PlayerShip::CreateShip();
+		    new AsteroidGenerator();
+		    isStart = false;
+	    }
+	    
+	    
         double currentTime = glfwGetTime();
         nbFrames++;
 	    double timePassed = currentTime - lastTime;
@@ -150,4 +159,12 @@ void Game::RemoveUnusedActors() {
 
 void Game::Finish() {
 	delete gameSingleton;
+}
+
+void Game::RestartScene() {
+	for(auto itr = actors.begin(); itr != actors.end(); itr++) {
+		Actor * actor = *itr;
+		actor->Destroy();
+	}
+	isStart = true;
 }

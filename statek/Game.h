@@ -38,6 +38,8 @@ public:
     void Begin();
     void Loop();
     void End();
+	
+	void RestartScene();
 
 public://Zapisywanie się aktorów
 	void SubscribeActor(Actor * actor);
@@ -62,6 +64,8 @@ private:
 	std::list<ITickable *> ticks;
 	std::list<Actor *> actors;
 	std::list<Actor *> actorsToBeRemoved;
+	
+	bool isStart = false;
 };
 
 
